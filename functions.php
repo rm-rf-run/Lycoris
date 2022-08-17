@@ -65,3 +65,141 @@ function add_page($title, $slug, $page_template = '')
         }
     }
 }
+
+
+//添加友情链接
+add_filter('pre_option_link_manager_enabled', '__return_true');
+
+//注册菜单的名称
+function register_my_menus()
+{
+    register_nav_menus(
+        array('header-menu' => __('首页'))
+    );
+}
+
+add_action('init', 'register_my_menus'); //初始化的时候启用
+
+
+//自定义菜单
+
+/**
+ * Custom walker class.
+ */
+class WPDocs_Walker_Nav_Menu extends Walker_Nav_Menu {
+
+    /**
+     * Starts the list before the elements are added.
+     *
+     * Adds classes to the unordered list sub-menus.
+     *
+     * @param string $output Passed by reference. Used to append additional content.
+     * @param int    $depth  Depth of menu item. Used for padding.
+     * @param array  $args   An array of arguments. @see wp_nav_menu()
+     */
+    function start_lvl( &$output, $depth = 0, $args = array() ) {
+        // Depth-dependent classes.
+        $indent = ( $depth > 0  ? str_repeat( "\t", $depth ) : '' ); // code indent
+        $display_depth = ( $depth + 1); // because it counts the first submenu as 0
+        $classes = array(
+            'sub-menu',
+            ( $display_depth % 2  ? 'dropdown-menu dropdown-menu-right menu-odd' : 'menu-even' ),
+            ( $display_depth >=2 ? 'sub-sub-menu' : '' ),
+            'menu-depth-' . $display_depth
+        );
+        $class_names = implode( ' ', $classes );
+
+        // Build HTML for output.
+        $output .= "\n" . $indent . '<ul class="' . $class_names . '" '.( $display_depth % 2  ? 'aria-labelledby="navbarDropdownMenuLink"' : '' ).'>' . "\n";
+    }
+
+    /**
+     * Start the element output.
+     *
+     * Adds main/sub-classes to the list items and links.
+     *
+     * @param string $output Passed by reference. Used to append additional content.
+     * @param object $item   Menu item data object.
+     * @param int    $depth  Depth of menu item. Used for padding.
+     * @param array  $args   An array of arguments. @see wp_nav_menu()
+     * @param int    $id     Current item ID.
+     */
+    function start_el( &$output, $item, $depth = 0, $args = array(), $id = 0 ) {
+        global $wp_query;
+        $indent = ( $depth > 0 ? str_repeat( "\t", $depth ) : '' ); // code indent
+
+        // Depth-dependent classes.
+        $depth_classes = array(
+            'nav-item dropdown', //新增属性
+            ( $depth == 0 ? 'main-menu-item' : 'sub-menu-item' ),
+            ( $depth >=2 ? 'sub-sub-menu-item' : '' ),
+            ( $depth % 2 ? 'menu-item-odd' : 'menu-item-even' ),
+            'menu-item-depth-' . $depth
+        );
+        $depth_class_names = esc_attr( implode( ' ', $depth_classes ) );
+
+        // Passed classes.
+        $classes = empty( $item->classes ) ? array() : (array) $item->classes;
+        $class_names = esc_attr( implode( ' ', apply_filters( 'nav_menu_css_class', array_filter( $classes ), $item ) ) );
+
+        // Build HTML.
+        $output .= $indent . '<li id="nav-menu-item-'. $item->ID . '" class="' . $depth_class_names . ' ' . $class_names . '">';
+
+        // Link attributes.
+        $attributes  = ! empty( $item->attr_title ) ? ' title="'  . esc_attr( $item->attr_title ) .'"' : '';
+        $attributes .= ! empty( $item->target )     ? ' target="' . esc_attr( $item->target     ) .'"' : '';
+        $attributes .= ! empty( $item->xfn )        ? ' rel="'    . esc_attr( $item->xfn        ) .'"' : '';
+        $attributes .= ! empty( $item->url )        ? ' href="'   . esc_attr( $item->url        ) .'"' : '';
+        $attributes .= ' class=" menu-link ' . ( $depth > 0 ? 'dropdown-item sub-menu-link' : 'nav-link dropdown-toggle main-menu-link' ) . '" ' . ( $depth > 0 ? '':'id="navbarDropdownMenuLink" data-toggle="dropdown" aria-expanded="true"' ) . '';
+
+        // Build HTML output and pass through the proper filter.
+        $item_output = sprintf( '%1$s<a%2$s>%3$s%4$s%5$s</a>%6$s',
+            $args->before,
+            $attributes,
+            $args->link_before,
+            apply_filters( 'the_title', $item->title, $item->ID ),
+            $args->link_after,
+            $args->after
+        );
+        $output .= apply_filters( 'walker_nav_menu_start_el', $item_output, $item, $depth, $args );
+    }
+}
+//自定义菜单结束
+
+//点击加载文章
+function custom_get_next_posts_link( $label = null, $max_page = 0 ) {
+    global $paged, $wp_query;
+
+    if ( ! $max_page ) {
+        $max_page = $wp_query->max_num_pages;
+    }
+
+    if ( ! $paged ) {
+        $paged = 1;
+    }
+
+    $nextpage = (int) $paged + 1;
+
+    if ( null === $label ) {
+        $label = __( 'Next Page &raquo;' );
+    }
+
+    if ( ! is_single() && ( $nextpage <= $max_page ) ) {
+        /**
+         * Filters the anchor tag attributes for the next posts page link.
+         *
+         * @since 2.7.0
+         *
+         * @param string $attributes Attributes for the anchor tag.
+         */
+        $attr = apply_filters( 'next_posts_link_attributes', '' );
+        return '<div class="row" id="aaa"><div class="col-md-4 ml-auto mr-auto text-center"><button class="btn btn-primary btn-round mt-4 btn-lg" id="show-more" href="'.next_posts( $max_page, false ).'">加载更多</button></div></div>';
+    }
+}
+//点击加载文章结束
+
+// 修改摘要长度
+function wpdocs_excerpt_more( $more ) {
+    return '.....';
+}
+add_filter( 'excerpt_more', 'wpdocs_excerpt_more' );
