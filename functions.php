@@ -253,3 +253,4 @@ function custom_icon_url($url, $size, $blog_id)
     }
     return $url;
 }
+add_filter('get_site_icon_url', 'custom_icon_url', 10, 3);
