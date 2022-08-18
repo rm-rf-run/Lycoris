@@ -30,3 +30,12 @@ Use it to make something cool, have fun, and share what you've learned with othe
     cursor: pointer;
     background-position: -40px -44px;
 }
+
+.label-primary{
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.label>a {
+    color: #2c2c2c;
+}

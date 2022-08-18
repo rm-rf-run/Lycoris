@@ -53,7 +53,7 @@ get_header(); ?>
                                     <div class="col-md-7">
                                         <h6 class="category text-info"><?php the_tags();?></h6>
                                         <h3 class="card-title">
-                                            <a href="#pablo"><?php the_title();?></a>
+                                            <a href="<?php esc_url(the_permalink()); ?>"><?php the_title();?></a>
                                         </h3>
                                         <p class="card-description">
                                             <?php echo wp_trim_words(get_the_excerpt(), 100);?><a href="<?php esc_url(the_permalink()); ?>"> Read More </a>
@@ -75,7 +75,7 @@ get_header(); ?>
                                             <?php the_tags();?>
                                         </h6>
                                         <h3 class="card-title">
-                                            <a href="#pablo"><?php the_title();?></a>
+                                            <a href="<?php esc_url(the_permalink()); ?>"><?php the_title();?></a>
                                         </h3>
                                         <p class="card-description">
                                             <?php echo wp_trim_words(get_the_excerpt(), 100);?><a href="<?php esc_url(the_permalink()); ?>"> Read More </a>

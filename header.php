@@ -94,7 +94,7 @@ if ( is_home() ) {
             <div class="row">
                 <div class="col-md-8 ml-auto mr-auto">
                     <h1 class="title"><?php the_title()?></h1>
-                    <h4>Meet the amazing team behind this project and find out more about how we work.</h4>
+                    <h4><?php echo wp_trim_words(get_the_excerpt(), 50);?></h4>
                 </div>
             </div>
         </div>

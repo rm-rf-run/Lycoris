@@ -6,22 +6,7 @@ get_header();
             <div class="container">
                 <div class="row">
                     <div class="col-md-8 ml-auto mr-auto">
-                        <h3 class="title">Rest of the Story:</h3>
-                        <p>We are here to make life better. And now I look and look around and there’s so many Kanyes
-                            I've been trying to figure out the bed design for the master bedroom at our Hidden Hills
-                            compound... and thank you for turning my personal jean jacket into a couture piece. <br/> I
-                            speak yell scream directly at the old guard on behalf of the future. daytime All respect
-                            prayers and love to Phife’s family Thank you for so much inspiration. </p>
-                        <p> Thank you Anna for the invite thank you to the whole Vogue team And I love you like Kanye
-                            loves Kanye Pand Pand Panda I've been trying to figure out the bed design for the master
-                            bedroom at our Hidden Hills compound...The Pablo pop up was almost a pop up of influence.
-                            All respect prayers and love to Phife’s family Thank you for so much inspiration daytime I
-                            love this new Ferg album! The Life of Pablo is now available for purchase I have a dream.
-                            Thank you to everybody who made The Life of Pablo the number 1 album in the world! I'm so
-                            proud of the nr #1 song in the country. Panda! Good music 2016!</p>
-                        <p> I love this new Ferg album! The Life of Pablo is now available for purchase I have a dream.
-                            Thank you to everybody who made The Life of Pablo the number 1 album in the world! I'm so
-                            proud of the nr #1 song in the country. Panda! Good music 2016!</p>
+                        <?php the_content();?>
                     </div>
                 </div>
             </div>
@@ -31,24 +16,10 @@ get_header();
                 <div class="row">
                     <div class="col-md-8 ml-auto mr-auto">
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="blog-tags">
-                                    Tags:
-                                    <span class="label label-primary">Photography</span>
-                                    <span class="label label-primary">Stories</span>
-                                    <span class="label label-primary">Castle</span>
+                                    <?php the_tags('<i class="fa fa-tags" style="color: #999" aria-hidden="true"></i><span class="label label-primary">','</span><span class="label label-primary">','</span>');?>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                                <a href="#pablo" class="btn btn-google btn-round pull-right">
-                                    <i class="fa fa-google"></i> 232
-                                </a>
-                                <a href="#pablo" class="btn btn-twitter btn-round pull-right">
-                                    <i class="fa fa-twitter"></i> 910
-                                </a>
-                                <a href="#pablo" class="btn btn-facebook btn-round pull-right">
-                                    <i class="fa fa-facebook-square"></i> 872
-                                </a>
                             </div>
                         </div>
                         <hr/>
@@ -57,7 +28,7 @@ get_header();
                                 <div class="col-md-2">
                                     <div class="card-avatar">
                                         <a href="#pablo">
-                                            <img class="img img-raised" src="../assets/img/mike.jpg">
+                                            <img class="img img-raised" src="https://image.prettywordpress.com/jasmine/image/dog.png">
                                         </a>
                                         <div class="ripple-container"></div>
                                     </div>
@@ -85,7 +56,7 @@ get_header();
                             <div class="media">
                                 <a class="pull-left" href="#pablo">
                                     <div class="avatar">
-                                        <img class="media-object img-raised" src="../assets/img/james.jpg" alt="..."/>
+                                        <img class="media-object img-raised" src="https://image.prettywordpress.com/jasmine/image/dog.png" alt="..."/>
                                     </div>
                                 </a>
                                 <div class="media-body">
@@ -111,7 +82,7 @@ get_header();
                                 <a class="pull-left" href="#pablo">
                                     <div class="avatar">
                                         <img class="media-object img-raised" alt="Tim Picture"
-                                             src="../assets/img/michael.jpg">
+                                             src="https://image.prettywordpress.com/jasmine/image/dog.png">
                                     </div>
                                 </a>
                                 <div class="media-body">
@@ -133,7 +104,7 @@ get_header();
                                         <a class="pull-left" href="#pablo">
                                             <div class="avatar">
                                                 <img class="media-object img-raised" alt="64x64"
-                                                     src="../assets/img/julie.jpg">
+                                                     src="https://image.prettywordpress.com/jasmine/image/dog.png">
                                             </div>
                                         </a>
                                         <div class="media-body">
@@ -161,7 +132,7 @@ get_header();
                         <div class="media media-post">
                             <a class="pull-left author" href="#pablo">
                                 <div class="avatar">
-                                    <img class="media-object img-raised" alt="64x64" src="../assets/img/olivia.jpg">
+                                    <img class="media-object img-raised" alt="64x64" src="https://image.prettywordpress.com/jasmine/image/dog.png">
                                 </div>
                             </a>
                             <div class="media-body">
@@ -181,7 +152,7 @@ get_header();
         <div class="section">
             <div class="container">
                 <div class="col-md-12">
-                    <h2 class="title text-center">Similar Stories</h2>
+                    <h2 class="title text-center">猜你喜欢</h2>
                     <br/>
                     <div class="blogs-1" id="blogs-1">
                         <div class="row">
@@ -191,7 +162,7 @@ get_header();
                                         <div class="col-md-5">
                                             <div class="card-image">
                                                 <img class="img img-raised rounded"
-                                                     src="../assets/img/examples/card-blog4.jpg">
+                                                     src="https://image.prettywordpress.com/jasmine/image/dog.png">
                                             </div>
                                         </div>
                                         <div class="col-md-7">
@@ -230,7 +201,7 @@ get_header();
                                         <div class="col-md-5">
                                             <div class="card-image">
                                                 <img class="img img-raised rounded
-                                            " src="../assets/img/examples/card-blog6.jpg">
+                                            " src="https://image.prettywordpress.com/jasmine/image/dog.png">
                                             </div>
                                         </div>
                                     </div>

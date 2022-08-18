@@ -211,3 +211,45 @@ function wpdocs_excerpt_more( $more ) {
     return '.....';
 }
 add_filter( 'excerpt_more', 'wpdocs_excerpt_more' );
+
+// 自定义标签
+function wpdocs_show_tags() {
+    $post_tags = get_the_tags();
+    $output = '';
+
+    if ( ! empty( $post_tags ) ) {
+        foreach ( $post_tags as $tag ) {
+            $output .= '<span class="label label-primary"><a href="' . esc_attr( get_tag_link( $tag->term_id ) ) . '">' . __( $tag->name ) . '</a></span>';
+        }
+    }
+
+    return trim( $output );
+}
+
+//引入自定义字段
+require_once dirname(__FILE__) . '/inc/options-framework.php';
+$optionsFile = locate_template('options.php');
+load_template($optionsFile);
+function prefix_options_menu_filter($menu)
+{
+    $menu['mode'] = 'submenu';
+    $menu['page_title'] = __('Lycoris主题设置', 'textdomain');
+    $menu['menu_title'] = __('Lycoris主题设置', 'textdomain');
+    $menu['menu_slug'] = 'Lycoris主题设置';
+    return $menu;
+}
+
+add_filter('optionsframework_menu', 'prefix_options_menu_filter');
+
+//用户自定义头像功能，前提在设置-讨论开启头像显示
+include (TEMPLATEPATH . '/inc/author-avatars.php');
+
+// 设置站点图标
+function custom_icon_url($url, $size, $blog_id)
+{
+    $site_icon_url = custom_option('site_icon');
+    if ($site_icon_url) {
+        $url = custom_option('site_icon');
+    }
+    return $url;
+}
