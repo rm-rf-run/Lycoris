@@ -47,7 +47,7 @@ get_header(); ?>
                                 <div class="row">
                                     <div class="col-md-5">
                                         <div class="card-image">
-                                            <img class="img img-raised rounded" data-cfsrc="assets/img/examples/card-blog4.jpg" src="https://demos.creative-tim.com/marketplace/now-ui-kit-pro/assets/img/examples/card-blog4.jpg">
+                                            <img class="img img-raised rounded" data-cfsrc="https://demos.creative-tim.com/marketplace/now-ui-kit-pro/assets/img/examples/card-blog4.jpg" src="https://demos.creative-tim.com/marketplace/now-ui-kit-pro/assets/img/examples/card-blog4.jpg">
                                         </div>
                                     </div>
                                     <div class="col-md-7">
@@ -87,7 +87,7 @@ get_header(); ?>
                                         </p></div>
                                     <div class="col-md-5">
                                         <div class="card-image">
-                                            <img class="img img-raised rounded" data-cfsrc="assets/img/examples/card-blog6.jpg" src="https://demos.creative-tim.com/marketplace/now-ui-kit-pro/assets/img/examples/card-blog6.jpg">
+                                            <img class="img img-raised rounded" data-cfsrc="https://demos.creative-tim.com/marketplace/now-ui-kit-pro/assets/img/examples/card-blog6.jpg" src="https://demos.creative-tim.com/marketplace/now-ui-kit-pro/assets/img/examples/card-blog6.jpg">
                                         </div>
                                     </div>
                                 </div>

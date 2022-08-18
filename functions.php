@@ -1,12 +1,20 @@
 <?php
 function wpdocs_theme_name_scripts() {
-    wp_enqueue_style( 'style', get_stylesheet_uri() );
-    wp_enqueue_style( 'other', get_theme_file_uri( '/assets/css/other.css' ) );
+    //加载顺序从上到下
+    //css
+    wp_enqueue_style( 'bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css' );
     wp_enqueue_style( 'font-awesome', 'https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.css' );
+    wp_enqueue_style( 'nprogress', 'https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.css' );
+    wp_enqueue_style( 'other', get_theme_file_uri( '/assets/css/other.css' ) );
+    wp_enqueue_style( 'style', get_stylesheet_uri() );
+    //js
+    wp_enqueue_script( 'jquery-min',  'https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js', array(), '1.0.0', true );
+    wp_enqueue_script( 'bootstrap',  'https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js', array(), '1.0.0', true );
     wp_enqueue_script( 'customize',  get_theme_file_uri( '/assets/js/customize.js' ), array(), '1.0.0', true );
+    wp_enqueue_script( 'nprogress',  'https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js', array(), '1.0.0', true );
     wp_enqueue_script( 'other',  get_theme_file_uri( '/assets/js/other.js' ), array(), '1.0.0', true );
 }
-// 添加CSS与JS
+// 所有CSS与JS使用该方法添加
 add_action( 'wp_enqueue_scripts', 'wpdocs_theme_name_scripts' );
 
 // 去除顶部工具栏
