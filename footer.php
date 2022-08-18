@@ -28,7 +28,7 @@
             </ul>
         </nav>
         <div class="copyright">
-            © <script>document.write(new Date().getFullYear())</script>2022, Designed by <a href="https://www.invisionapp.com">Invision</a>. Coded by <a href="https://www.creative-tim.com">Creative Tim</a>.
+            © <script>document.write(new Date().getFullYear())</script>2022, Power by <a href="https://cn.wordpress.org/">wordpress</a>. Theme by <a href="https://github.com/rm-rf-run/Lycoris">Lycoris</a>.
         </div>
     </div>
 </footer>
