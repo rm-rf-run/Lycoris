@@ -1,6 +1,12 @@
 <?php
 
 ?>
+<div class="to-top transition" style="display: none;">
+    <span class="fa-stack fa-2x">
+        <i class="fa fa-stop fa-stack-2x" style="color: #9a9a9a"></i>
+        <i class="fa fa-angle-up fa-stack-2x " style="color: white"></i>
+    </span>
+</div>
 <footer class="footer " data-background-color="black">
     <div class="container">
         <nav>
