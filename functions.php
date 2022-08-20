@@ -158,7 +158,12 @@ class WPDocs_Walker_Nav_Menu extends Walker_Nav_Menu {
         $attributes .= ! empty( $item->target )     ? ' target="' . esc_attr( $item->target     ) .'"' : '';
         $attributes .= ! empty( $item->xfn )        ? ' rel="'    . esc_attr( $item->xfn        ) .'"' : '';
         $attributes .= ! empty( $item->url )        ? ' href="'   . esc_attr( $item->url        ) .'"' : '';
-        $attributes .= ' class=" menu-link ' . ( $depth > 0 ? 'dropdown-item sub-menu-link' : 'nav-link dropdown-toggle main-menu-link' ) . '" ' . ( $depth > 0 ? '':'id="navbarDropdownMenuLink" data-toggle="dropdown" aria-expanded="true"' ) . '';
+        $nums=substr_count($class_names,'menu-item-has-children');
+        if($nums > 0){ // 判断是否有子集ul
+            $attributes .= ' class=" menu-link ' . ( $depth > 0 ? 'dropdown-item sub-menu-link' : 'nav-link dropdown-toggle main-menu-link' ) . '" ' . ( $depth > 0 ? '':'id="navbarDropdownMenuLink" data-toggle="dropdown" aria-expanded="false"' ) . '';
+        }else{
+            $attributes .= ' class=" menu-link ' . ( $depth > 0 ? 'dropdown-item sub-menu-link' : 'nav-link main-menu-link' ) . '" ' . ( $depth > 0 ? '':'id="navbarDropdownMenu"' ) . '';
+        }
 
         // Build HTML output and pass through the proper filter.
         $item_output = sprintf( '%1$s<a%2$s>%3$s%4$s%5$s</a>%6$s',
@@ -254,3 +259,165 @@ function custom_icon_url($url, $size, $blog_id)
     return $url;
 }
 add_filter('get_site_icon_url', 'custom_icon_url', 10, 3);
+
+// 替换评论class
+function wpdocs_comment_reply_link_class( $class ) {
+    if ( get_option( 'comment_registration' ) && ! is_user_logged_in() ) {
+        $class = str_replace( 'class="comment-reply-login"', "class='comment-reply-login btn btn-primary btn-neutral pull-right'", $class );
+    }else{
+        $class = str_replace( "class='comment-reply-link'", "class='comment-reply-link btn btn-primary btn-neutral pull-right'", $class );
+    }
+    return $class;
+}
+
+add_filter( 'comment_reply_link', 'wpdocs_comment_reply_link_class' );
+
+// 替换评论模板
+function custom_comment($comment, $args, $depth) {
+   ?>
+    <div class="media" <?php comment_class( empty( $args['has_children'] ) ? '' : 'parent' ); ?> id="comment-<?php comment_ID() ?>">
+        <a class="pull-left" href="<?php echo htmlspecialchars( get_comment_link( $comment->comment_ID ) ); ?>">
+            <div class="avatar">
+                <img class="media-object img-raised" src="<?php echo get_avatar_url($comment, $args);?>" alt="..."/>
+            </div>
+        </a>
+        <div class="media-body">
+            <h5 class="media-heading"><?php echo get_comment_author();?>
+                <small class="text-muted">&middot;
+                    <?php echo sprintf( __( '%s前' ), human_time_diff(get_comment_date( 'U', $comment ), current_time( 'timestamp' ) ) );?>
+                </small>
+            </h5>
+            <?php if ($comment->comment_approved == '0') : ?><p>你的评论正在审核，稍后会显示出来！</p><?php endif; ?>
+            <?php comment_text(); ?>
+            <div class="media-footer" <?php echo $comment->comment_approved;?>>
+                <?php
+                if ($comment->comment_approved == '1') {
+                comment_reply_link(
+                    array_merge(
+                        $args,
+                        array(
+                            'reply_text' => __('<i class="fa fa-paper-plane-o" aria-hidden="true"></i>  回复', 'textdomain'),
+                            'login_text' => __('<i class="fa fa-paper-plane-o" aria-hidden="true"></i>  登录发言', 'textdomain'),
+                            'add_below' => 'comment',
+                            'depth'     => $depth,
+                            'max_depth' => $args['max_depth']
+                        )
+                    )
+                );} ?>
+                <a href="#pablo" class="btn btn-danger btn-neutral pull-right">
+                    <i class="fa fa-heart-o" aria-hidden="true"></i> 243
+                </a>
+            </div>
+        </div>
+    </div>
+    <?php
+}
+
+// 评论字段排序
+//Comment Field Order
+add_filter( 'comment_form_fields', 'mo_comment_fields_custom_order' );
+function mo_comment_fields_custom_order( $fields ) {
+    $comment_field = $fields['comment'];
+    $author_field = $fields['author'];
+    $email_field = $fields['email'];
+    $url_field = $fields['url'];
+    $cookies_field = $fields['cookies'];
+    unset( $fields['comment'] );
+    unset( $fields['author'] );
+    unset( $fields['email'] );
+    unset( $fields['url'] );
+    unset( $fields['cookies'] );
+    // the order of fields is the order below, change it as needed:
+    $fields['author'] = $author_field;
+    $fields['email'] = $email_field;
+    $fields['url'] = $url_field;
+    $fields['comment'] = $comment_field;
+    $fields['cookies'] = $cookies_field;
+    // done ordering, now return the fields:
+    return $fields;
+}
+
+//数据库插入评论表单的qq字段
+add_action('wp_insert_comment', 'custom_sql_insert_qq_field', 10, 2);
+/**
+ * 数据库插入评论表单的qq字段
+ *
+ * @param $comment_ID
+ * @param $commmentdata
+ */
+function custom_sql_insert_qq_field($comment_ID, $commmentdata)
+{
+    $qq = isset($_POST['author_qq']) ? $_POST['author_qq'] : false;
+    update_comment_meta($comment_ID, 'author_qq', $qq); // author_qq 是表单name值，也是存储在数据库里的字段名字
+}
+
+// 后台评论中显示qq字段
+add_filter('manage_edit-comments_columns', 'add_comments_columns');
+add_action('manage_comments_custom_column', 'output_comments_qq_columns', 10, 2);
+function add_comments_columns($columns)
+{
+    $columns['author_qq'] = __('QQ号'); // 新增列名称
+    return $columns;
+}
+
+function output_comments_qq_columns($column_name, $comment_id)
+{
+    switch ($column_name) {
+        case "author_qq":
+            // 这是输出值，可以拿来在前端输出，这里已经在钩子manage_comments_custom_column上输出了
+            echo get_comment_meta($comment_id, 'author_qq', true);
+            break;
+    }
+}
+// 参考评论模板
+function mytheme_comment($comment, $args, $depth) {
+    if ( 'div' === $args['style'] ) {
+        $tag       = 'div';
+        $add_below = 'comment';
+    } else {
+        $tag       = 'li';
+        $add_below = 'div-comment';
+    }?>
+    <<?php echo $tag; ?> <?php comment_class( empty( $args['has_children'] ) ? '' : 'parent' ); ?> id="comment-<?php comment_ID() ?>"><?php
+    if ( 'div' != $args['style'] ) { ?>
+        <div id="div-comment-<?php comment_ID() ?>" class="comment-body"><?php
+    } ?>
+    <div class="comment-author vcard"><?php
+    if ( $args['avatar_size'] != 0 ) {
+        echo get_avatar( $comment, $args['avatar_size'] );
+    }
+    printf( __( '<cite class="fn">%s</cite> <span class="says">says:</span>' ), get_comment_author_link() ); ?>
+    </div><?php
+    if ( $comment->comment_approved == '0' ) { ?>
+        <em class="comment-awaiting-moderation"><?php _e( 'Your comment is awaiting moderation.' ); ?></em><br/><?php
+    } ?>
+    <div class="comment-meta commentmetadata">
+        <a href="<?php echo htmlspecialchars( get_comment_link( $comment->comment_ID ) ); ?>"><?php
+            /* translators: 1: date, 2: time */
+            printf(
+                __('%1$s at %2$s'),
+                get_comment_date(),
+                get_comment_time()
+            ); ?>
+        </a><?php
+        edit_comment_link( __( '(Edit)' ), '  ', '' ); ?>
+    </div>
+
+    <?php comment_text(); ?>
+
+    <div class="reply"><?php
+    comment_reply_link(
+        array_merge(
+            $args,
+            array(
+                'add_below' => $add_below,
+                'depth'     => $depth,
+                'max_depth' => $args['max_depth']
+            )
+        )
+    ); ?>
+    </div><?php
+    if ( 'div' != $args['style'] ) : ?>
+        </div><?php
+    endif;
+}

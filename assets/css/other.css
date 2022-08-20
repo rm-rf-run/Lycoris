@@ -3637,7 +3637,8 @@ input.datetimepicker[data-color=yellow] + .bootstrap-datetimepicker-widget table
 }
 
 .input-group .form-control:last-child, .input-group-text:last-child, .input-group-btn:last-child > .dropdown-toggle, .input-group-btn:first-child > .btn:not(:first-child) {
-    border-left: 0
+    border-left: 0;
+    height: 100%;
 }
 
 .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {

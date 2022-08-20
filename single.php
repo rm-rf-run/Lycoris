@@ -1,7 +1,7 @@
 <?php
 get_header();
 ?>
-    <div class="wrapper">
+    <div class="wrapper blog-post">
         <div class="section">
             <div class="container">
                 <div class="row">
@@ -34,9 +34,8 @@ get_header();
                                     </div>
                                 </div>
                                 <div class="col-md-8">
-                                    <h4 class="card-title">Alec Thompson</h4>
-                                    <p class="description">I've been trying to figure out the bed design for the master
-                                        bedroom at our Hidden Hills compound...I like good music from Youtube.</p>
+                                    <h4 class="card-title"><?php echo custom_option("author_name");?></h4>
+                                    <p class="description"><?php echo custom_option("admin_des");?></p>
                                 </div>
                                 <div class="col-md-2">
                                     <button type="button" class="btn btn-default pull-right btn-round">Follow</button>
@@ -47,108 +46,25 @@ get_header();
                 </div>
             </div>
         </div>
-        <div class="section section-comments">
+        <?php
+        // 如果评论是开放的或者我们至少有一个评论，加载评论模板。
+        if ( comments_open() || get_comments_number() ) :
+            ?>
+            <div class="section section-comments">
             <div class="container">
                 <div class="row">
                     <div class="col-md-8 ml-auto mr-auto">
                         <div class="media-area">
-                            <h3 class="title text-center">3 Comments</h3>
-                            <div class="media">
-                                <a class="pull-left" href="#pablo">
-                                    <div class="avatar">
-                                        <img class="media-object img-raised" src="https://image.prettywordpress.com/jasmine/image/dog.png" alt="..."/>
-                                    </div>
-                                </a>
-                                <div class="media-body">
-                                    <h5 class="media-heading">Tina Andrew <small class="text-muted">&middot; 7 minutes
-                                            ago</small></h5>
-                                    <p>Chance too good. God level bars. I'm so proud of @LifeOfDesiigner #1 song in the
-                                        country. Panda! Don't be scared of the truth because we need to restart the
-                                        human foundation in truth I stand with the most humility. We are so blessed!</p>
-                                    <p>All praises and blessings to the families of people who never gave up on dreams.
-                                        Don't forget, You're Awesome!</p>
-                                    <div class="media-footer">
-                                        <a href="#pablo" class="btn btn-primary btn-neutral pull-right" rel="tooltip"
-                                           title="Reply to Comment">
-                                            <i class="now-ui-icons ui-1_send"></i> Reply
-                                        </a>
-                                        <a href="#pablo" class="btn btn-danger btn-neutral pull-right">
-                                            <i class="now-ui-icons ui-2_favourite-28"></i> 243
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="media">
-                                <a class="pull-left" href="#pablo">
-                                    <div class="avatar">
-                                        <img class="media-object img-raised" alt="Tim Picture"
-                                             src="https://image.prettywordpress.com/jasmine/image/dog.png">
-                                    </div>
-                                </a>
-                                <div class="media-body">
-                                    <h5 class="media-heading">John Camber <small class="text-muted">&middot;
-                                            Yesterday</small></h5>
-                                    <p>Hello guys, nice to have you on the platform! There will be a lot of great stuff
-                                        coming soon. We will keep you posted for the latest news.</p>
-                                    <p> Don't forget, You're Awesome!</p>
-                                    <div class="media-footer">
-                                        <a href="#pablo" class="btn btn-primary btn-neutral pull-right" rel="tooltip"
-                                           title="Reply to Comment">
-                                            <i class="now-ui-icons ui-1_send"></i> Reply
-                                        </a>
-                                        <a href="#pablo" class="btn btn-danger btn-neutral pull-right">
-                                            <i class="now-ui-icons ui-2_favourite-28"></i> 25
-                                        </a>
-                                    </div>
-                                    <div class="media">
-                                        <a class="pull-left" href="#pablo">
-                                            <div class="avatar">
-                                                <img class="media-object img-raised" alt="64x64"
-                                                     src="https://image.prettywordpress.com/jasmine/image/dog.png">
-                                            </div>
-                                        </a>
-                                        <div class="media-body">
-                                            <h5 class="media-heading">Tina Andrew <small class="text-muted">· 2 Days
-                                                    Ago</small></h5>
-                                            <p>Hello guys, nice to have you on the platform! There will be a lot of
-                                                great stuff coming soon. We will keep you posted for the latest
-                                                news.</p>
-                                            <p> Don't forget, You're Awesome!</p>
-                                            <div class="media-footer">
-                                                <a href="#pablo" class="btn btn-primary btn-neutral pull-right"
-                                                   rel="tooltip" title="" data-original-title="Reply to Comment">
-                                                    <i class="now-ui-icons ui-1_send"></i> Reply
-                                                </a>
-                                                <a href="#pablo" class="btn btn-danger btn-neutral pull-right">
-                                                    <i class="now-ui-icons ui-2_favourite-28"></i> 2
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <h3 class="title text-center"><?php echo get_comment_count(get_the_ID())['approved'];?> 条评论</h3>
                         </div>
-                        <h3 class="title text-center">Post your comment</h3>
-                        <div class="media media-post">
-                            <a class="pull-left author" href="#pablo">
-                                <div class="avatar">
-                                    <img class="media-object img-raised" alt="64x64" src="https://image.prettywordpress.com/jasmine/image/dog.png">
-                                </div>
-                            </a>
-                            <div class="media-body">
-                                <textarea class="form-control" placeholder="Write a nice reply or go home..."
-                                          rows="4"></textarea>
-                                <div class="media-footer">
-                                    <a href="#pablo" class="btn btn-primary pull-right">
-                                        <i class="now-ui-icons ui-1_send"></i> Reply
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
+                        <?php comments_template();?>
                     </div>
                 </div>
             </div>
-        </div>
+            </div>
+            <?php
+        endif;
+        ?>
         <div class="section">
             <div class="container">
                 <div class="col-md-12">
@@ -212,39 +128,6 @@ get_header();
                 </div>
             </div>
         </div>
-        <!--    <footer class="footer " data-background-color="black">-->
-        <!--        <div class="container">-->
-        <!--            <nav>-->
-        <!--                <ul>-->
-        <!--                    <li>-->
-        <!--                        <a href="#creative">-->
-        <!--                            Creative Tim-->
-        <!--                        </a>-->
-        <!--                    </li>-->
-        <!--                    <li>-->
-        <!--                        <a href="#creative">-->
-        <!--                            About Us-->
-        <!--                        </a>-->
-        <!--                    </li>-->
-        <!--                    <li>-->
-        <!--                        <a href="#creative">-->
-        <!--                            Blog-->
-        <!--                        </a>-->
-        <!--                    </li>-->
-        <!--                    <li>-->
-        <!--                        <a href="#creative">-->
-        <!--                            License-->
-        <!--                        </a>-->
-        <!--                    </li>-->
-        <!--                </ul>-->
-        <!--            </nav>-->
-        <!--            <div class="copyright">-->
-        <!--                &copy; <script>document.write(new Date().getFullYear())</script>, Designed by <a href="https://www.invisionapp.com">Invision</a>. Coded by <a href="https://www.creative-tim.com">Creative Tim</a>.-->
-        <!--            </div>-->
-        <!--        </div>-->
-        <!--    </footer>-->
-        <!--</div>-->
-        <!--</body>-->
 <?php
 get_footer();
 ?>

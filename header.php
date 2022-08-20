@@ -42,14 +42,25 @@ if ( is_home() ) {
     <div class="page-header header-filter">
         <div class="page-header-image" style="background-image: url('https://demos.creative-tim.com/marketplace/now-ui-kit-pro/assets/img/bg16.jpg');"></div>
         <div class="content-center">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-7 ml-auto text-right">
-                        <h1 class="title">History of surfing</h1>
-                        <h4 class="description">
-                            <?php printf( __( 'The email address for user id 25 is %s', 'textdomain' ), get_the_author_meta( 'user_email',1 ) ); ?>
-                        </h4>
-                        <br>
+            <div class="row">
+                <div class="col-md-8 ml-auto mr-auto text-center">
+                    <h1 class="title">Island of legends.</h1>
+                    <h4 class="description ">The islands of Malta and Gozo are brilliant for a family holiday, packed with fun places to visit whatever your children’s ages. The islands’ small size means everywhere is within easy reach.</h4>
+                    <br>
+                    <h5>Connect with us on:</h5>
+                    <div class="buttons">
+                        <a href="#pablo" class="btn btn-icon btn-neutral btn-danger btn-round mt-2">
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                        <a href="#pablo" class="btn btn-icon btn-neutral btn-danger btn-round mt-2">
+                            <i class="fa fa-facebook-square"></i>
+                        </a>
+                        <a href="#pablo" class="btn btn-icon btn-neutral btn-danger btn-round mt-2">
+                            <i class="fa fa-google-plus"></i>
+                        </a>
+                        <a href="#pablo" class="btn btn-icon btn-neutral btn-danger btn-round  mt-2">
+                            <i class="fa fa-instagram"></i>
+                        </a>
                     </div>
                 </div>
             </div>
