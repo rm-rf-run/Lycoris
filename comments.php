@@ -13,7 +13,7 @@ if (post_password_required()) { // 如果文章设置密码则不展示
     $comment_reply_to = '回复 %s';
     $comment_author = '昵称';
     $comment_email = 'E-Mail';
-    $comment_body = '评论支持Markdown语法，期待大佬的精彩发言~';
+    $comment_body = '期待大佬的精彩发言~';
     $comment_url = 'Website';
     $comment_cookies_1 = ' 回复评论代表你同意网站的';
     $comment_cookies_2 = ' 隐私政策';
@@ -21,7 +21,7 @@ if (post_password_required()) { // 如果文章设置密码则不展示
     $comment_cancel = '取消回复';
     $comment_bird = '<div class="pull-left author">
 <div class="avatar">
-<img class="media-object img-raised" alt="64x64" src="https://image.prettywordpress.com/jasmine/image/dog.png">
+<img class="media-object img-raised" id="author_img" alt="64x64" src="https://image.prettywordpress.com/jasmine/image/dog.png">
 </div>
 </div>';
     //Array

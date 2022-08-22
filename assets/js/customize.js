@@ -61,5 +61,43 @@ $(function() {
         }), 100)
     });
 
+    // 获取QQ头像与名称
+    $('#author_qq').on('blur', function () {
+        var qq = $('#author_qq').val();
+        $reg = /^[1-9]\d{4,9}$/;
+        if ($reg.test(qq)) {
+            $('#email').val($.trim(qq) + '@qq.com');
+            // ajax方法获取昵称
+            $.ajax({
+                type: 'get',
+                //本地调试使用绝对路径
+                url: '/wp-content/themes/Lycoris/inc/get_qqInfo.php?type=getqqnickname&qq=' + qq, // func_getqqinfo.php是后端处理文件，注意路径
+                dataType: 'jsonp',
+                jsonp: 'callback',
+                jsonpCallback: 'portraitCallBack',
+                success: function (data) {
+                    $('#author').val(data[qq][6]); // 将返回的qq昵称填入到昵称input表单上
+                },
+                error: function () {
+                    $('#author_qq,#author,#email').val(''); // 如果获取失败则清空表单
+                }
+            });
+            // 获取头像
+            $.ajax({
+                type: 'get',
+                url: '/wp-content/themes/Lycoris/inc/get_qqInfo.php?type=getqqavatar&qq=' + qq, // func_getqqinfo.php是后端处理文件，注意路径，127.0.0.1 改成你自己的域名！
+                dataType: 'jsonp',
+                jsonp: 'callback',
+                jsonpCallback: 'qqavatarCallBack',
+                success: function (data) {
+                    $('#author_img').attr('src', data[qq]); // 将返回的qq头像设置到你评论表单区域显示头像的节点上
+                },
+                error: function () {
+                    $('#author_qq,#author,#email').val(''); // 清空表单
+                }
+            });
+        }
+    });
+
 
 })
