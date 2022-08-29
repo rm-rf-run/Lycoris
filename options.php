@@ -103,9 +103,16 @@ function optionsframework_options()
     );
 
     $options[] = array(
-        'name' => __('站点名称', 'jasmine'),
+        'name' => __('首页描述标题', 'jasmine'),
         'desc' => __('jasmineThemeBlog', 'jasmine'),
-        'id' => 'site_name',
+        'id' => 'home_title',
+        'std' => '',
+        'type' => 'text');
+
+    $options[] = array(
+        'name' => __('首页描述简介', 'jasmine'),
+        'desc' => __('jasmineThemeBlog', 'jasmine'),
+        'id' => 'home_synopsis',
         'std' => '',
         'type' => 'text');
 

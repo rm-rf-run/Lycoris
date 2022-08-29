@@ -29,6 +29,7 @@ function add_pages()
     if ('themes.php' == $pagenow && isset($_GET['activated'])) {
 //        jasmine_add_page('归档', 'post-archives', 'post-archives.php'); //页面标题、别名、页面模板
         add_page('友情链接', 'friend-link', 'friend-link.php');
+        add_page('关于我', 'about-me', 'about-me.php');
     }
 }
 
@@ -420,4 +421,156 @@ function mytheme_comment($comment, $args, $depth) {
     if ( 'div' != $args['style'] ) : ?>
         </div><?php
     endif;
+}
+
+// 新增文章专栏
+add_filter('manage_posts_columns' , 'add_article_column');
+add_action('manage_posts_custom_column', 'output_article_column', 10, 2);
+function add_article_column($columns) {
+    $columns['article_column'] = __('文章专栏'); // 新增列名称
+    return $columns;
+}
+function output_article_column($column, $post_id)
+{
+    switch ($column) {
+        case "article_column":
+            echo get_post_meta($post_id, '_sites_article_column', true);;
+            break;
+    }
+}
+
+add_action('quick_edit_custom_box', 'io_add_quick_edit', 10, 2);
+
+function io_add_quick_edit($column_name, $post_type)
+{
+
+    if ($column_name == 'article_column') {//值与前方代码对应
+
+//请注意：<fieldset>类可以是：
+
+//inline-edit-col-left，inline-edit-col-center，inline-edit-col-right
+
+//所有列均为float：left，
+
+//因此，如果要在左列，请使用clear：both元素
+
+        echo '
+
+<fieldset class="inline-edit-col-left" style="clear: both;">
+
+<div class="inline-edit-col">
+
+<label class="alignleft">
+
+<span class="title">文章专栏</span>
+
+<span class="input-text-wrap"><input type="text" name="article_column" class="ptitle" value=""></span>
+
+</label>
+
+<em class="alignleft inline-edit-or">&nbsp;&nbsp;&nbsp;&nbsp;分步骤的教程文章建议新增一个文章专栏</em>
+
+</div>
+
+</fieldset>';
+
+    }
+}
+
+/**
+
+ * 文章列表添加自定义字段
+
+ */
+
+add_action('save_post', 'io_save_quick_edit_data');
+
+function io_save_quick_edit_data($post_id)
+{
+
+    // 如果是自动保存日志，并非我们所提交数据，那就不处理
+
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE)
+
+        return $post_id;
+
+    // 验证权限，默认为 'post'
+
+    if (!current_user_can('edit_post', $post_id))
+        return $post_id;
+
+    $post = get_post($post_id);
+
+    // 'article_column' 与前方代码对应
+
+    if (isset($_POST['article_column']) && ($post->post_type != 'revision')) {
+
+        $left_menu_id = esc_attr($_POST['article_column']);
+
+        if ($left_menu_id)
+
+            update_post_meta($post_id, '_sites_article_column', $left_menu_id);// ‘_sites_article_column’为自定义字段
+
+    }
+
+}
+
+/**
+
+ * 文章列表添加自定义字段
+
+ */
+
+add_action('admin_footer', 'quick_edit_javascript');
+
+function quick_edit_javascript()
+{
+
+    $current_screen = get_current_screen();
+
+
+    if ($current_screen->id == 'edit-post') {
+
+//修改下方 js 代码中的 article_column 为前方代码对应的值
+
+        echo "
+
+<script type='text/javascript'>
+
+jQuery(function($){
+
+var wp_inline_edit_function = inlineEditPost.edit;
+
+inlineEditPost.edit = function( post_id ) {
+
+wp_inline_edit_function.apply( this, arguments );
+
+var id = 0;
+
+if ( typeof( post_id ) == 'object' ) {
+
+id = parseInt( this.getId( post_id ) );
+
+}
+
+if ( id > 0 ) {
+
+var specific_post_edit_row = $( '#edit-' + id ),
+
+specific_post_row = $( '#post-' + id ),
+
+product_price = $( '.article_column', specific_post_row ).text();
+
+$('input[name=\"article_column\"]', specific_post_edit_row ).val( product_price );
+
+}
+
+}
+
+});
+
+</script>";
+
+    }
+
 }

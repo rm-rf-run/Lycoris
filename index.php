@@ -29,7 +29,7 @@ get_header(); ?>
 
                         $args = array(
 
-                            'caller_get_posts' => 1,
+                            'ignore_sticky_posts' => 1,
 
                             'paged' => $paged
 
