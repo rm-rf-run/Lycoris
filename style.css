@@ -39,3 +39,95 @@ Use it to make something cool, have fun, and share what you've learned with othe
 .label>a {
     color: #2c2c2c;
 }
+
+
+@media screen and (min-width: 1200px) {
+    .share-slide-button-box {
+        height: 326px;
+        position: fixed;
+        overflow: visible;
+    }
+
+    .share-slide-button {
+        width: 24px;
+        height: 88px;
+        display: block;
+        position: absolute;
+        top: 58px;
+        left: -24px;
+        text-align: center;
+        padding-top: 25px;
+        color: white;
+        background-color: #253845;
+        border-bottom-left-radius: 8px;
+        border-top-left-radius: 8px;
+    }
+
+    .share-slide-button:hover{
+        color: white;
+        text-decoration: none;
+    }
+
+    .share-slide-top {
+        height: 28px;
+        color: #626262;
+        overflow: hidden;
+        font-weight: bold;
+        font-size: 14px;
+        line-height: 28px;
+        padding: 0 5px;
+    }
+
+    .share-slide-list-box {
+        border: solid 1px #e9e9e9;
+        text-align: left;
+        overflow: hidden;
+        background: #f6f6f6;
+    }
+
+    .share-slide-list {
+        min-height: 200px;
+        background: #fff;
+        overflow: auto;
+        overflow-x: hidden;
+        padding: 5px 0;
+        margin: 0;
+        background: #fff;
+        overflow: auto;
+        overflow-x: hidden;
+        _zoom: 1;
+    }
+
+    .share-slide-list-ul {
+        padding: 0;
+        margin: 0;
+        border: 0;
+        list-style: none;
+    }
+
+    .share-slide-list li {
+        width: 100%;
+        float: left;
+        padding: 2px;
+        margin-left: 6px;
+        _margin-left: 3px;
+        overflow: hidden;
+        list-style: none;
+        padding: 5px 0 5px 10px;
+    }
+
+    .share-slide-list li i{
+        width: 10%;
+    }
+
+    .share-slide-list li a{
+        width: 90%;
+        color: #212529;
+        text-decoration: none;
+    }
+
+    .share-slide-list li:hover{
+        background-color: #f8f9fa;
+    }
+
+}

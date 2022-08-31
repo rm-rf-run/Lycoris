@@ -434,7 +434,7 @@ function output_article_column($column, $post_id)
 {
     switch ($column) {
         case "article_column":
-            echo get_post_meta($post_id, '_sites_article_column', true);;
+            echo get_post_meta($post_id, '_sites_article_column', true);
             break;
     }
 }

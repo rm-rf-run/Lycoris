@@ -99,5 +99,33 @@ $(function() {
         }
     });
 
+    $('.share-slide-button').on('mouseover', function (event) {
+
+        $('.share-slide-button-box').animate({'width':'226px'},{ duration: 500,
+            step: function() {
+                $('.share-slide-button-box').css("overflow","visible");
+            }
+        })
+        $('.share-slide-list-box').css("display","block").animate({'width':'226px'},{ duration: 500,
+            step: function() {
+                $('.share-slide-list-box').css("overflow","visible");
+            }
+        })
+    })
+
+    $('.share-slide-list-box').on('mouseleave', function (event) {
+
+        $('.share-slide-button-box').animate({'width':'-226px'},{ duration: 500,
+            step: function() {
+                $('.share-slide-button-box').css("overflow","visible");
+            }
+        })
+        $('.share-slide-list-box').css("display","block").animate({'width':'-226px'},{ duration: 500,
+            step: function() {
+                $('.share-slide-list-box').css("overflow","visible");
+            }
+        })
+    })
+
 
 })

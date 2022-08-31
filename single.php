@@ -98,6 +98,7 @@ get_header();
                             <div class="row">
                                 <div class="col-md-10 ml-auto mr-auto">
                                     <?php
+                                    $i = 1;
                                     while ( have_posts() ) : the_post();
                                         if($i % 2 == 1){
                                             ?>
@@ -163,6 +164,40 @@ get_header();
                     </div>
                 </div>
             </div>
+            </div>
+            <?php
+            $articleColumn = get_post_meta(get_the_ID(), '_sites_article_column', true);
+            $args = array(
+                'meta_query' => array(
+                    array(
+                        'key'   => '_sites_article_column',
+                        'value' => $articleColumn
+                    )
+                ),
+
+            );
+            $postId = get_the_ID();
+            $postsList = get_posts( $args );
+
+            if ( $postsList ) {
+            ?>
+            <div class="share-slide-button-box" style="top: 100px; width: 0px; z-index: 99999; right: 0px;">
+                <a href="#" onclick="return false;" class="share-slide-button" style="left: -24px;" tabindex="1">目录</a>
+                <div class="share-slide-list-box" style="width: 0px; display: none;">
+                    <div class="share-slide-top">wordpress文章专栏</div>
+                    <div class="share-slide-list">
+                        <ul class="share-slide-list-ul" style="width: 226px;">
+                            <?php
+                                foreach ( $postsList as $post ) :
+                                     ?>
+                                    <li> <a href="<?php echo $post->guid; ?>" onclick="return false;" class="slide-mshare" data-cmd="mshare"><i class="<?php echo $postId==$post->ID?"fa fa-eercast":"fa fa-circle-thin"?>" aria-hidden="true"></i> <?php echo $post->post_title; ?></a></li>
+                                <?php
+                                endforeach;
+                            }
+                            ?>
+                        </ul>
+                    </div>
+                </div>
             </div>
         <?php endif;
 get_footer();
